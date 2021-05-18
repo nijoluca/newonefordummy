@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command: bundle exec rails s -e development -p 80 -b '0.0.0.0'
+    volumes:
+      - .:/compose-app
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+development: &default
+  adapter: postgresql
+  encoding: unicode
+  database: postgres
+  pool: 5
+  username: postgres
+  password:
+  host: db
